@@ -1,6 +1,10 @@
-import { Container, Grid, Grow, Paper, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Grow, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { QueryBuilder, ThumbUpAlt, Visibility } from '@material-ui/icons/';
+import { Skeleton } from '@material-ui/lab';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import HighchartsExporting from 'highcharts/modules/exporting';
 import React from 'react';
 import {
   AreaChart,
@@ -28,55 +32,73 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InfoStream = ({ infoStream }) => {
-  const {
-    snippet: { title },
-    statistics: { commentCount, dislikeCount, likeCount, viewCount },
-  } = infoStream;
+const InfoStream = ({ infoStream, spects }) => {
 
   const classes = useStyles();
+
+
+
+
+
+
 
   return (
     <Grow in direction="up" timeout={750}>
       <Paper className={classes.paper} elevation={0}>
         <Container className={classes.container}>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="stretch"
-            spacing={4}
-            className={classes.maxSize}
-          >
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                <b>{title}</b>
-              </Typography>
-            </Grid>
+          {infoStream ? (
 
             <Grid
-              item
-              xs={12}
               container
               direction="row"
-              justify="center"
-              alignItems="flex-start"
-              spacing={6}
+              justify="space-between"
+              alignItems="stretch"
+              spacing={4}
+              className={classes.maxSize}
             >
-              <Statistics infoStream={infoStream} classes={classes} />
+              <Grid item xs={12}>
+                <Typography variant="h5">
+                  <b>{infoStream.snippet.title}</b>
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                container
+                direction="row"
+                justify="center"
+                alignItems="flex-start"
+                spacing={6}
+              >
+                <Statistics statistics={infoStream.statistics} classes={classes} />
+              </Grid>
+              <Grid item xs={12}>
+                <SpectRealTime spects={spects} classes={classes} />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <SpectRealTime spects={[0]} classes={classes} />
-            </Grid>
-          </Grid>
+
+          ) : (
+              <Box
+                width="100%"
+                style={{ paddingBottom: '1.5rem' }}
+              >
+                <Skeleton width="75%" >
+                  <Typography variant="h4">.</Typography>
+                </Skeleton>
+                <Skeleton variant="rect" width="95%" height="100%">
+                  <div style={{ paddingTop: '30%' }} />
+                </Skeleton>
+              </Box>
+            )}
         </Container>
       </Paper>
     </Grow>
   );
 };
 
-function Statistics({ infoStream, classes }) {
-  const { spects, likes, duration } = infoStream;
+function Statistics({ statistics, classes }) {
+  const { commentCount, dislikeCount, likeCount, viewCount } = statistics;
 
   return (
     <>
@@ -94,7 +116,7 @@ function Statistics({ infoStream, classes }) {
         <Grid item xs={4}>
           <Typography display="inline" variant="h6">
             {' '}
-            <b>{spects}</b>
+            <b>{viewCount}</b>
           </Typography>
         </Grid>
       </Grid>
@@ -112,7 +134,7 @@ function Statistics({ infoStream, classes }) {
         <Grid item xs={4}>
           <Typography display="inline" variant="h6">
             {' '}
-            {likes}
+            {likeCount}
           </Typography>
         </Grid>
       </Grid>
@@ -130,7 +152,7 @@ function Statistics({ infoStream, classes }) {
         <Grid item xs={4}>
           <Typography display="inline" variant="h6">
             {' '}
-            {duration}
+            {commentCount}
           </Typography>
         </Grid>
       </Grid>
@@ -184,6 +206,59 @@ function SpectRealTime({ spects, classes }) {
     },
   ];
 
+  const xLabel = spects.map((e) => ('Texto'))
+
+
+
+
+
+  const options = {
+    chart: {
+      type: 'areaspline'
+    },
+    colors: ['#f44336'],
+    title: {
+      text: 'Espectadores en tiempo real'
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'top',
+      x: 150,
+      y: 100,
+      floating: true,
+      borderWidth: 1,
+      backgroundColor:
+        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+    },
+    xAxis: {
+      categories: xLabel,
+      visible: false
+
+    },
+    yAxis: {
+      title: {
+        text: 'Espectadores'
+      }
+    },
+    tooltip: {
+      shared: true,
+      valueSuffix: ' units'
+    },
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      areaspline: {
+        fillOpacity: 0.5
+      }
+    },
+    series: [{
+      name: 'Espectadores',
+      data: spects
+    }]
+  }
+  HighchartsExporting(Highcharts);
   return (
     <Grid
       container
@@ -192,42 +267,9 @@ function SpectRealTime({ spects, classes }) {
       alignItems="center"
       spacing={2}
     >
+
       <Grid item xs={12}>
-        <Typography display="inline" variant="h6">
-          <b>Espectadores en tiempo real</b>
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <ResponsiveContainer width={'99%'} height={150}>
-          <AreaChart
-            width={800}
-            height={150}
-            data={data}
-            margin={{
-              top: 10,
-              right: 10,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <defs>
-              <linearGradient id="colorCurve" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="10%" stopColor="#d32f2f" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#ffcdd2" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis hide />
-            <YAxis />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="uv"
-              stroke="#d32f2f"
-              fillOpacity={1}
-              fill="url(#colorCurve)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <HighchartsReact highcharts={Highcharts} options={options} />
       </Grid>
     </Grid>
   );

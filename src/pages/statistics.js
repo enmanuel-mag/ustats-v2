@@ -37,37 +37,29 @@ const Statistics = () => {
   console.log(snippet);
 
   const [infoStream, setInfoStream] = useState(null);
-
-  console.log('STATS');
-  console.log(infoStream);
-
-  const getStatistics = async () => {
-    try {
-      const st = await window.gapi.client.youtube.videos.list({
-        part: ['snippet,contentDetails,statistics'],
-        id: ['Uge0zR-Q_D4'],
-      });
-
-      return st.result.items[0];
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [spects, setSpects] = useState([2, 2, 2, 2, 2])
+  const listUrl = snippet.thumbnails.default.url.split('/')
+  const videoId = listUrl[listUrl.length - 2]
 
   useEffect(() => {
-    console.log('Refresh');
-    setInterval(async () => {
-      const iS = await getStatistics();
-      setInfoStream(iS);
-    }, 10000);
-  }, [infoStream]);
 
-  /* const infoStream = {
-    title: 'EXTREMO y TARDE TRANQUILA - 12 HORAS!',
-    likes: 2900,
-    spects: 12500,
-    duration: Date.now(),
-  }; */
+    /* (async () => {
+      try {
+        const st = await window.gapi.client.youtube.videos.list({
+          part: ['snippet,contentDetails,statistics'],
+          id: [videoId],
+        });
+        setInfoStream(st.result.items[0])
+        setSpects(st.result.items[0].statistics.viewCount)
+        return st.result.items[0];
+      } catch (error) {
+        console.log(error);
+      }
+    })() */
+    console.log('object')
+  }, []);
+
+
   const words = [
     {
       name: 'told',
@@ -138,11 +130,11 @@ const Statistics = () => {
             spacing={2}
             id="holi"
           >
-            <Grid item xs={5}>
+            <Grid item xs={12} lg={5}>
               <VideoPLayer urlVideo={urlVideo} />
             </Grid>
-            <Grid item xs={7}>
-              <InfoStream infoStream={infoStream} />
+            <Grid item xs={12} lg={7}>
+              <InfoStream infoStream={infoStream} spects={spects} />
             </Grid>
             <Grid
               item
@@ -150,7 +142,7 @@ const Statistics = () => {
               direction="row"
               justify="flex-start"
               alignItems="flex-start"
-              xs={5}
+              xs={12} lg={5}
             >
               <Grid item xs={12}>
                 <Analitics topics={topics} className={classes.maxSize} />
@@ -159,7 +151,7 @@ const Statistics = () => {
                 <WorldCloud words={words} />
               </Grid>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12} lg={7}>
               <Bubble />
             </Grid>
           </Grid>

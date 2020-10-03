@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     display: 'block',
     width: '100%',
-    height: 'auto',
+    height: '100%',
   },
 }));
 
