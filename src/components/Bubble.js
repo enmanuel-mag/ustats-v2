@@ -3,7 +3,8 @@ import Highcharts from 'highcharts';
 import { makeStyles } from '@material-ui/core/styles';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from 'highcharts/modules/exporting';
-import { Container, Grow, Paper } from '@material-ui/core';
+import { Box, Container, Grow, Paper, Typography } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Bubble = () => {
+const Bubble = ({ data }) => {
   const classes = useStyles();
 
   const options = {
@@ -229,14 +230,38 @@ const Bubble = () => {
   if (typeof Highcharts === 'object') {
     HighchartsExporting(Highcharts);
     require('highcharts/highcharts-more')(Highcharts);
+
     return (
       <Grow in direction="up" timeout={750}>
         <Paper className={classes.paper}>
-          <Container className={classes.container}>
-            <figure className="highcharts-figure">
-              <HighchartsReact highcharts={Highcharts} options={options} />
-            </figure>
-          </Container>
+          {data ? (
+            <Container className={classes.container}>
+              <figure className="highcharts-figure">
+                <HighchartsReact highcharts={Highcharts} options={options} />
+              </figure>
+            </Container>
+          ) : (
+            <Box
+              width="100%"
+              alignContent="center"
+              style={{ paddingBottom: '1.5rem' }}
+            >
+              <Skeleton
+                width="50%"
+                style={{ display: 'block', margin: 'auto' }}
+              >
+                <Typography variant="h3">.</Typography>
+              </Skeleton>
+              <Skeleton
+                variant="rect"
+                width="95%"
+                height="100%"
+                style={{ display: 'block', margin: 'auto' }}
+              >
+                <div style={{ paddingTop: '95%' }} />
+              </Skeleton>
+            </Box>
+          )}
         </Paper>
       </Grow>
     );

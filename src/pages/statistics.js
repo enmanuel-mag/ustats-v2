@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-
+import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import VideoPLayer from '../components/VideoPLayer';
 import InfoStream from '../components/InfoStream';
@@ -32,12 +32,42 @@ const useStyles = makeStyles((theme) => ({
 const Statistics = () => {
   const classes = useStyles();
   const urlVideo = 'https://www.youtube.com/watch?v=C-o8pTi6vd8';
-  const infoStream = {
+  const location = useLocation();
+  const { snippet } = location.state;
+  console.log(snippet);
+
+  const [infoStream, setInfoStream] = useState(null);
+
+  console.log('STATS');
+  console.log(infoStream);
+
+  const getStatistics = async () => {
+    try {
+      const st = await window.gapi.client.youtube.videos.list({
+        part: ['snippet,contentDetails,statistics'],
+        id: ['Uge0zR-Q_D4'],
+      });
+
+      return st.result.items[0];
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Refresh');
+    setInterval(async () => {
+      const iS = await getStatistics();
+      setInfoStream(iS);
+    }, 10000);
+  }, [infoStream]);
+
+  /* const infoStream = {
     title: 'EXTREMO y TARDE TRANQUILA - 12 HORAS!',
     likes: 2900,
     spects: 12500,
     duration: Date.now(),
-  };
+  }; */
   const words = [
     {
       name: 'told',

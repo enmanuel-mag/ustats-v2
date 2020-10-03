@@ -18,10 +18,7 @@ const Hero = () => {
   return (
     <Container className={classes.container}>
       <Typography variant="h5" color="secondary">
-        Obten información de tu Streaming de{' '}
-        <Typography variant="h5" display={'inline'} className={classes.textYt}>
-          <b>Youtube</b>
-        </Typography>
+        Obten información de tu Streaming de <b>Youtube</b>
       </Typography>
       <Typography color="secondary">
         visualiza fácilmente temas frecuentes

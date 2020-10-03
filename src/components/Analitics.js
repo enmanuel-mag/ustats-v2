@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   Grid,
   Grow,
@@ -7,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -93,44 +95,69 @@ const Analitics = (props) => {
   const { topics } = props;
   const classes = useStyles();
   const classesList = useStyleList();
+
   return (
     <Grow in direction="up" timeout={750}>
       <Paper className={classes.paper}>
-        <Container className={classes.container}>
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
-            spacing={2}
-          >
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                <b>Análisis de tu Stream</b>
-              </Typography>
-            </Grid>
+        {!topics ? (
+          <Container className={classes.container}>
             <Grid
-              item
               container
-              xs={12}
               direction="row"
               justify="flex-start"
               alignItems="flex-start"
-              spacing={1}
+              spacing={2}
             >
               <Grid item xs={12}>
-                <Typography variant="h6">Temas frecuentes:</Typography>
+                <Typography variant="h5">
+                  <b>Análisis de tu Stream</b>
+                </Typography>
               </Grid>
-              <Grid item xs={12}>
-                {topics.map((topic, index) => (
-                  <ListItem key={index} classes={classesList}>
-                    {index + 1}- {topic.main}
-                  </ListItem>
-                ))}
+              <Grid
+                item
+                container
+                xs={12}
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+                spacing={1}
+              >
+                <Grid item xs={12}>
+                  <Typography variant="h6">Temas frecuentes:</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  {topics.map((topic, index) => (
+                    <ListItem key={index} classes={classesList}>
+                      {index + 1}- {topic.main}
+                    </ListItem>
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        ) : (
+          <Box
+            width="100%"
+            style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}
+          >
+            <Skeleton width="75%" style={{ marginLeft: '1.5rem' }}>
+              <Typography variant="h4">.</Typography>
+            </Skeleton>
+            <Skeleton width="40%" style={{ marginLeft: '1.5rem' }}>
+              <Typography variant="h5">.</Typography>
+            </Skeleton>
+
+            {[1, 2, 3, 4, 5, 6, 7].map((ind) => (
+              <Skeleton
+                key={ind}
+                width="80%"
+                style={{ marginTop: '1.25rem', marginLeft: '1.5rem' }}
+              >
+                <Typography variant="h5">.</Typography>
+              </Skeleton>
+            ))}
+          </Box>
+        )}
       </Paper>
     </Grow>
   );

@@ -29,7 +29,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const InfoStream = ({ infoStream }) => {
-  const { title, spects } = infoStream;
+  const {
+    snippet: { title },
+    statistics: { commentCount, dislikeCount, likeCount, viewCount },
+  } = infoStream;
+
   const classes = useStyles();
 
   return (
@@ -62,7 +66,7 @@ const InfoStream = ({ infoStream }) => {
               <Statistics infoStream={infoStream} classes={classes} />
             </Grid>
             <Grid item xs={12}>
-              <SpectRealTime spects={spects} classes={classes} />
+              <SpectRealTime spects={[0]} classes={classes} />
             </Grid>
           </Grid>
         </Container>

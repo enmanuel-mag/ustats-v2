@@ -6,11 +6,9 @@ import MyRouts from './routes/';
 
 function App() {
   return (
-    <Suspense fallback="loading">
-      <ThemeProvider theme={theme}>
-        <MyRouts />
-      </ThemeProvider>
-    </Suspense>
+    <ThemeProvider theme={theme}>
+      <MyRouts />
+    </ThemeProvider>
   );
 }
 

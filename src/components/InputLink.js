@@ -1,14 +1,20 @@
 import {
   Button,
   Container,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Grid,
+  Grow,
+  LinearProgress,
   Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,16 +25,95 @@ const useStyles = makeStyles((theme) => ({
     boxShadow:
       '0 15px 35px 0 rgba(18,37,49,.1),0 5px 15px 0 rgba(0,0,0,.05)!important',
   },
+  linearProgress: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 const InputLink = () => {
   const classes = useStyles();
-  const router = useRouter();
 
-  const startAnalitics = () => {
-    console.log('Empezando validación');
-    router.push('/statistics');
+  const history = useHistory();
+  const [liveChatIdState, setLiveChatId] = useState(false);
+  const [channelIdState, setChannelId] = useState(false);
+  const [stats, setStats] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    window.gapi.load('client:auth2', function () {
+      window.gapi.auth2.init({
+        client_id:
+          '562079300844-3j1crd3j2nr6gt47fp1ld5i50jr73ine.apps.googleusercontent.com',
+      });
+    });
+  }, [liveChatIdState, channelIdState]);
+
+  const handleOpen = () => {
+    setOpen(true);
   };
+
+  const handleClose = () => {
+    console.log('Cerrando dialog');
+    setOpen(false);
+  };
+
+  const authenticate = async () => {
+    try {
+      const au = await window.gapi.auth2
+        .getAuthInstance()
+        .signIn({ scope: 'https://www.googleapis.com/auth/youtube.readonly' });
+      return au;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadClient = async () => {
+    try {
+      await window.gapi.client.setApiKey(
+        'AIzaSyChscvtJ-RlEJYuf9kt8Fn5iiRi6wjOxIc'
+      );
+      const lc = await window.gapi.client.load(
+        'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
+      );
+      return lc;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getLiveChatAndChannelId = async () => {
+    try {
+      const glcid = await window.gapi.client.youtube.liveBroadcasts.list({
+        part: ['snippet'],
+        mine: true,
+      });
+      console.log(glcid);
+      return {
+        snippet: glcid.result.items[0].snippet,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const startAnalitics = async () => {
+    console.log('Empezando validación');
+
+    await authenticate();
+    handleOpen();
+    await loadClient();
+    const { snippet } = await getLiveChatAndChannelId();
+    handleClose();
+    history.push('/statistics', { snippet });
+  };
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Grow timeout={850} ref={ref} {...props} />;
+  });
 
   return (
     <Paper className={classes.paper} elevation={0}>
@@ -54,19 +139,46 @@ const InputLink = () => {
               color="primary"
               size="large"
               onClick={startAnalitics}
-              href="/stats"
             >
               Empezar
             </Button>
+
+            {open && (
+              <Dialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+                disableBackdropClick
+                disableEscapeKeyDown
+                TransitionComponent={Transition}
+              >
+                <DialogTitle id="customized-dialog-title">
+                  <b>Conectando con tu Streaming</b>
+                </DialogTitle>
+                <DialogContent dividers>
+                  <Typography gutterBottom>
+                    Estamos estableciendo conexión con tu streaming para
+                    proceder a realizar anñalisis de los mensajes de su
+                    audiencia.
+                  </Typography>
+
+                  <Typography gutterBottom>
+                    Esto tomará un par de minutos, la página lo redigirirá
+                    automaticamenta, <br />
+                    por favor espere.
+                  </Typography>
+                </DialogContent>
+                <div className={classes.linearProgress}>
+                  <LinearProgress />
+                </div>
+              </Dialog>
+            )}
           </Grid>
 
           <Grid item xs={12}>
             <Typography display={'inline'}>
-              Por favor enviar un correo{' '}
-              <Typography display={'inline'} color={'primary'}>
-                ustats@support.com
-              </Typography>
-              <Typography>si algún problema aparece</Typography>
+              Por favor enviar un correo ustats@support.com si algún problema
+              aparece
             </Typography>
           </Grid>
         </Grid>

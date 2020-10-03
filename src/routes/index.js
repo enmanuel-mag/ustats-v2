@@ -10,7 +10,7 @@ const index = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/stats" component={Stats} />
+          <Route exact path="/statistics" component={Stats} />
         </Switch>
       </Router>
     </div>
