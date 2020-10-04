@@ -36,58 +36,58 @@ const Statistics = () => {
   const location = useLocation();
   const { snippet } = location.state;
 
-
   const [infoStream, setInfoStream] = useState(null);
-  const [spects, setSpects] = useState([])
-  const listUrl = snippet.thumbnails.default.url.split('/')
-  const videoId = listUrl[listUrl.length - 2]
-  const [bubbleSt, setBubbleSt] = useState(null)
-  const [wcSt, setWcSt] = useState(null)
+  const [spects, setSpects] = useState([]);
+  const listUrl = snippet.thumbnails.default.url.split('/');
+  const videoId = listUrl[listUrl.length - 2];
+  const [bubbleSt, setBubbleSt] = useState(null);
+  const [wcSt, setWcSt] = useState(null);
 
   useEffect(() => {
-
     setInterval(() => {
       (async () => {
         try {
-          console.log(videoId)
+          console.log(videoId);
           const st = await window.gapi.client.youtube.videos.list({
             part: ['snippet,contentDetails,statistics'],
             id: [videoId],
           });
-          setInfoStream(st.result.items[0])
-          setSpects(p => ([...p, parseInt(st.result.items[0].statistics.likeCount)]))
+          setInfoStream(st.result.items[0]);
+          setSpects((p) => [
+            ...p,
+            parseInt(st.result.items[0].statistics.likeCount),
+          ]);
           return st.result.items[0];
         } catch (error) {
           console.log(error);
         }
-      })()
-    }, 10000);
-    console.log('Desde API DETAILS')
+      })();
+    }, 15000);
+    console.log('Desde API DETAILS');
   }, []);
 
   useEffect(() => {
+    setTimeout(() => {
+      (async () => {
+        const response = await fetch('/consultas/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ liveChatId: snippet.liveChatId }),
+        });
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        const { bubble, wc } = data;
 
-    (async () => {
-      const response = await fetch('/consultas/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ liveChatId: snippet.liveChatId })
-      })
-      console.log(response)
-      const data = await response.json()
-      console.log(data)
-      const { bubble, wc } = data;
+        setBubbleSt(bubble);
+        setWcSt(wc);
+      })();
+    }, 20000);
 
-      setBubbleSt(bubble)
-      setWcSt(wc)
-
-    })()
-
-    console.log(snippet)
-  }, [])
-
+    console.log(snippet);
+  }, []);
 
   const words = [
     {
@@ -171,74 +171,84 @@ const Statistics = () => {
               direction="row"
               justify="flex-start"
               alignItems="flex-start"
-              xs={12} lg={5}
+              xs={12}
+              lg={5}
             >
               <Grid item xs={12}>
-                {bubbleSt ? (<Analitics topics={bubbleSt} className={classes.maxSize} />) :
-                  (
-                    <Box
-                      width="100%"
-                      style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}
-                    >
-                      <Skeleton width="75%" style={{ marginLeft: '1.5rem' }}>
-                        <Typography variant="h4">.</Typography>
-                      </Skeleton>
-                      <Skeleton width="40%" style={{ marginLeft: '1.5rem' }}>
+                {bubbleSt ? (
+                  <Analitics topics={bubbleSt} className={classes.maxSize} />
+                ) : (
+                  <Box
+                    width="100%"
+                    style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}
+                  >
+                    <Skeleton width="75%" style={{ marginLeft: '1.5rem' }}>
+                      <Typography variant="h4">.</Typography>
+                    </Skeleton>
+                    <Skeleton width="40%" style={{ marginLeft: '1.5rem' }}>
+                      <Typography variant="h5">.</Typography>
+                    </Skeleton>
+
+                    {[1, 2, 3, 4, 5, 6, 7].map((ind) => (
+                      <Skeleton
+                        key={ind}
+                        width="80%"
+                        style={{ marginTop: '1.25rem', marginLeft: '1.5rem' }}
+                      >
                         <Typography variant="h5">.</Typography>
                       </Skeleton>
-
-                      {[1, 2, 3, 4, 5, 6, 7].map((ind) => (
-                        <Skeleton
-                          key={ind}
-                          width="80%"
-                          style={{ marginTop: '1.25rem', marginLeft: '1.5rem' }}
-                        >
-                          <Typography variant="h5">.</Typography>
-                        </Skeleton>
-                      ))}
-                    </Box>
-                  )}
+                    ))}
+                  </Box>
+                )}
               </Grid>
               <Grid item xs={12} className={classes.itemSec}>
-                {wcSt ? (<WorldCloud words={wcSt} />) : <Box
-                  width="100%"
-                  alignContent="center"
-                  style={{
-                    paddingTop: '1.5rem',
-                    paddingLeft: '1.5rem',
-                    paddingBottom: '1.5rem',
-                  }}
-                >
-                  <Skeleton width="50%">
-                    <Typography variant="h3">.</Typography>
-                  </Skeleton>
-                  <Skeleton variant="rect" width="95%" height="100%">
-                    <div style={{ paddingTop: '60%' }} />
-                  </Skeleton>
-                </Box>}
+                {wcSt ? (
+                  <WorldCloud words={wcSt} />
+                ) : (
+                  <Box
+                    width="100%"
+                    alignContent="center"
+                    style={{
+                      paddingTop: '1.5rem',
+                      paddingLeft: '1.5rem',
+                      paddingBottom: '1.5rem',
+                    }}
+                  >
+                    <Skeleton width="50%">
+                      <Typography variant="h3">.</Typography>
+                    </Skeleton>
+                    <Skeleton variant="rect" width="95%" height="100%">
+                      <div style={{ paddingTop: '60%' }} />
+                    </Skeleton>
+                  </Box>
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} lg={7}>
-              {bubbleSt ? (<Bubble data={bubbleSt} />) : <Box
-                width="100%"
-                alignContent="center"
-                style={{ paddingBottom: '1.5rem' }}
-              >
-                <Skeleton
-                  width="50%"
-                  style={{ display: 'block', margin: 'auto' }}
+              {bubbleSt ? (
+                <Bubble data={bubbleSt} />
+              ) : (
+                <Box
+                  width="100%"
+                  alignContent="center"
+                  style={{ paddingBottom: '1.5rem' }}
                 >
-                  <Typography variant="h3">.</Typography>
-                </Skeleton>
-                <Skeleton
-                  variant="rect"
-                  width="95%"
-                  height="100%"
-                  style={{ display: 'block', margin: 'auto' }}
-                >
-                  <div style={{ paddingTop: '95%' }} />
-                </Skeleton>
-              </Box>}
+                  <Skeleton
+                    width="50%"
+                    style={{ display: 'block', margin: 'auto' }}
+                  >
+                    <Typography variant="h3">.</Typography>
+                  </Skeleton>
+                  <Skeleton
+                    variant="rect"
+                    width="95%"
+                    height="100%"
+                    style={{ display: 'block', margin: 'auto' }}
+                  >
+                    <div style={{ paddingTop: '95%' }} />
+                  </Skeleton>
+                </Box>
+              )}
             </Grid>
           </Grid>
         </div>
