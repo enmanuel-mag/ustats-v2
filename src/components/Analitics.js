@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Skeleton } from '@material-ui/lab';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -93,13 +93,27 @@ const useStyleList = makeStyles((theme) => ({
 
 const Analitics = (props) => {
   const { topics } = props;
+  const [info, setInfo] = useState([])
+
+  useEffect(() => {
+
+    topics.map((e, i) => {
+      setInfo(p => {
+        return [...p, e.data[0].name]
+      })
+    })
+
+  }, [topics])
+
+
+
   const classes = useStyles();
   const classesList = useStyleList();
 
   return (
     <Grow in direction="up" timeout={750}>
       <Paper className={classes.paper}>
-        {!topics ? (
+        {topics ? (
           <Container className={classes.container}>
             <Grid
               container
@@ -126,9 +140,9 @@ const Analitics = (props) => {
                   <Typography variant="h6">Temas frecuentes:</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  {topics.map((topic, index) => (
+                  {info.map((text, index) => (
                     <ListItem key={index} classes={classesList}>
-                      {index + 1}- {topic.main}
+                      {index + 1}- {text}
                     </ListItem>
                   ))}
                 </Grid>
@@ -136,28 +150,28 @@ const Analitics = (props) => {
             </Grid>
           </Container>
         ) : (
-          <Box
-            width="100%"
-            style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}
-          >
-            <Skeleton width="75%" style={{ marginLeft: '1.5rem' }}>
-              <Typography variant="h4">.</Typography>
-            </Skeleton>
-            <Skeleton width="40%" style={{ marginLeft: '1.5rem' }}>
-              <Typography variant="h5">.</Typography>
-            </Skeleton>
-
-            {[1, 2, 3, 4, 5, 6, 7].map((ind) => (
-              <Skeleton
-                key={ind}
-                width="80%"
-                style={{ marginTop: '1.25rem', marginLeft: '1.5rem' }}
-              >
+            <Box
+              width="100%"
+              style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}
+            >
+              <Skeleton width="75%" style={{ marginLeft: '1.5rem' }}>
+                <Typography variant="h4">.</Typography>
+              </Skeleton>
+              <Skeleton width="40%" style={{ marginLeft: '1.5rem' }}>
                 <Typography variant="h5">.</Typography>
               </Skeleton>
-            ))}
-          </Box>
-        )}
+
+              {[1, 2, 3, 4, 5, 6, 7].map((ind) => (
+                <Skeleton
+                  key={ind}
+                  width="80%"
+                  style={{ marginTop: '1.25rem', marginLeft: '1.5rem' }}
+                >
+                  <Typography variant="h5">.</Typography>
+                </Skeleton>
+              ))}
+            </Box>
+          )}
       </Paper>
     </Grow>
   );

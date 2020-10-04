@@ -14,7 +14,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
+  },
+  link: {
+    color: '#f44336',
+    textDecoration: 'none !important',
+  },
+  btnStart: {
+    width: '14rem',
+    height: '4rem',
+    fontSize: '1.5rem',
   },
 }));
 
@@ -125,19 +134,11 @@ const InputLink = () => {
           alignItems="stretch"
           spacing={6}
         >
-          <Grid item xs={12} container>
-            <TextField
-              id="filled-basic"
-              label="Link de su Streaming"
-              variant="outlined"
-              fullWidth
-            />
-          </Grid>
           <Grid item xs={12}>
             <Button
               variant="contained"
               color="primary"
-              size="large"
+              className={classes.btnStart}
               onClick={startAnalitics}
             >
               Empezar
@@ -177,9 +178,15 @@ const InputLink = () => {
 
           <Grid item xs={12}>
             <Typography display={'inline'}>
-              Por favor enviar un correo ustats@support.com si algún problema
-              aparece
+              Por favor enviar un correo
             </Typography>
+            <Typography display={'inline'} color="primary"></Typography>
+            <Typography display={'inline'} color="primary">
+              <a className={classes.link} href="mailto:ustats@support.com">
+                <b> ustats@support.com</b>
+              </a>
+            </Typography>
+            <Typography> si algún problema aparece</Typography>
           </Grid>
         </Grid>
       </Container>

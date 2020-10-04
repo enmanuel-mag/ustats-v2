@@ -17,13 +17,12 @@ const Hero = () => {
   const classes = useStyles();
   return (
     <Container className={classes.container}>
-      <Typography variant="h5" color="secondary">
+      <Typography variant="h4" color="secondary">
         Obten información de tu Streaming de <b>Youtube</b>
       </Typography>
-      <Typography color="secondary">
-        visualiza fácilmente temas frecuentes
+      <Typography variant="h6" color="secondary">
+        Visualiza fácilmente temas frecuentes que escriben tus espectadores
       </Typography>
-      <Typography color="secondary">que escriben tus espectadores</Typography>
     </Container>
   );
 };

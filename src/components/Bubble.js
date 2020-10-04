@@ -67,164 +67,7 @@ const Bubble = ({ data }) => {
         },
       },
     },
-    series: [
-      {
-        name: 'Europe',
-        data: [
-          {
-            name: 'Germany',
-            value: 767.1,
-          },
-
-          {
-            name: 'Romania',
-            value: 78.3,
-          },
-          {
-            name: 'United Kingdom',
-            value: 415.4,
-          },
-          {
-            name: 'Turkey',
-            value: 353.2,
-          },
-          {
-            name: 'Italy',
-            value: 337.6,
-          },
-        ],
-      },
-      {
-        name: 'Africa',
-        data: [
-          {
-            name: 'Tunisia',
-            value: 24.3,
-          },
-          {
-            name: 'Angola',
-            value: 25,
-          },
-
-          {
-            name: 'Nigeria',
-            value: 93.9,
-          },
-          {
-            name: 'South Africa',
-            value: 392.7,
-          },
-          {
-            name: 'Egypt',
-            value: 225.1,
-          },
-          {
-            name: 'Algeria',
-            value: 141.5,
-          },
-        ],
-      },
-      {
-        name: 'Oceania',
-        data: [
-          {
-            name: 'Australia',
-            value: 409.4,
-          },
-          {
-            name: 'New Zealand',
-            value: 34.1,
-          },
-          {
-            name: 'Papua New Guinea',
-            value: 7.1,
-          },
-        ],
-      },
-      {
-        name: 'North America',
-        data: [
-          {
-            name: 'Cuba',
-            value: 30.2,
-          },
-          {
-            name: 'USA',
-            value: 5334.5,
-          },
-          {
-            name: 'Canada',
-            value: 566,
-          },
-          {
-            name: 'Mexico',
-            value: 456.3,
-          },
-        ],
-      },
-      {
-        name: 'South America',
-        data: [
-          {
-            name: 'Colombia',
-            value: 74.1,
-          },
-          {
-            name: 'Brazil',
-            value: 501.1,
-          },
-          {
-            name: 'Argentina',
-            value: 199,
-          },
-          {
-            name: 'Venezuela',
-            value: 195.2,
-          },
-        ],
-      },
-      {
-        name: 'Asia',
-        data: [
-          {
-            name: 'Taiwan',
-            value: 276.7,
-          },
-          {
-            name: 'Indonesia',
-            value: 453,
-          },
-          {
-            name: 'Saudi Arabia',
-            value: 494.8,
-          },
-          {
-            name: 'Japan',
-            value: 1278.9,
-          },
-          {
-            name: 'China',
-            value: 10540.8,
-          },
-          {
-            name: 'India',
-            value: 2341.9,
-          },
-          {
-            name: 'Russia',
-            value: 1766.4,
-          },
-          {
-            name: 'Iran',
-            value: 618.2,
-          },
-          {
-            name: 'Korea',
-            value: 610.1,
-          },
-        ],
-      },
-    ],
+    series: data
   };
 
   if (typeof Highcharts === 'object') {
@@ -241,27 +84,27 @@ const Bubble = ({ data }) => {
               </figure>
             </Container>
           ) : (
-            <Box
-              width="100%"
-              alignContent="center"
-              style={{ paddingBottom: '1.5rem' }}
-            >
-              <Skeleton
-                width="50%"
-                style={{ display: 'block', margin: 'auto' }}
+              <Box
+                width="100%"
+                alignContent="center"
+                style={{ paddingBottom: '1.5rem' }}
               >
-                <Typography variant="h3">.</Typography>
-              </Skeleton>
-              <Skeleton
-                variant="rect"
-                width="95%"
-                height="100%"
-                style={{ display: 'block', margin: 'auto' }}
-              >
-                <div style={{ paddingTop: '95%' }} />
-              </Skeleton>
-            </Box>
-          )}
+                <Skeleton
+                  width="50%"
+                  style={{ display: 'block', margin: 'auto' }}
+                >
+                  <Typography variant="h3">.</Typography>
+                </Skeleton>
+                <Skeleton
+                  variant="rect"
+                  width="95%"
+                  height="100%"
+                  style={{ display: 'block', margin: 'auto' }}
+                >
+                  <div style={{ paddingTop: '95%' }} />
+                </Skeleton>
+              </Box>
+            )}
         </Paper>
       </Grow>
     );

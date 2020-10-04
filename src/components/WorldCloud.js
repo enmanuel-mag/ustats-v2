@@ -34,7 +34,7 @@ const WorldCloud = ({ words }) => {
   const classes = useStyles();
 
   const optionsFunc = (wordsT) => {
-    console.log(wordsT);
+
     return {
       series: [
         {
@@ -56,7 +56,7 @@ const WorldCloud = ({ words }) => {
     return (
       <Grow in direction="up" timeout={750}>
         <Paper className={classes.paper}>
-          {!words ? (
+          {words ? (
             <Container className={classes.container}>
               <Typography variant="h5" className={classes.wordCloud}>
                 <b>Palabras mas frecuentes</b>
@@ -67,23 +67,23 @@ const WorldCloud = ({ words }) => {
               />
             </Container>
           ) : (
-            <Box
-              width="100%"
-              alignContent="center"
-              style={{
-                paddingTop: '1.5rem',
-                paddingLeft: '1.5rem',
-                paddingBottom: '1.5rem',
-              }}
-            >
-              <Skeleton width="50%">
-                <Typography variant="h3">.</Typography>
-              </Skeleton>
-              <Skeleton variant="rect" width="95%" height="100%">
-                <div style={{ paddingTop: '60%' }} />
-              </Skeleton>
-            </Box>
-          )}
+              <Box
+                width="100%"
+                alignContent="center"
+                style={{
+                  paddingTop: '1.5rem',
+                  paddingLeft: '1.5rem',
+                  paddingBottom: '1.5rem',
+                }}
+              >
+                <Skeleton width="50%">
+                  <Typography variant="h3">.</Typography>
+                </Skeleton>
+                <Skeleton variant="rect" width="95%" height="100%">
+                  <div style={{ paddingTop: '60%' }} />
+                </Skeleton>
+              </Box>
+            )}
         </Paper>
       </Grow>
     );

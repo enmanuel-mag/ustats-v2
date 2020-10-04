@@ -18,35 +18,49 @@ const Info = () => {
   return (
     <Paper className={classes.paper} elevation={0}>
       <Container className={classes.container} maxWidth="xl">
-        <Grid container spacing={4} direction="column">
+        <Grid container spacing={3} direction="column">
           <Grid item>
-            <Typography variant="h6">¿Qué es uStats?</Typography>
+            <Typography gutterBottom variant="h6">
+              ¿Qué es uStats?
+            </Typography>
             <Typography variant="body1" color="textPrimary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-              porttitor porttitor nibh, at consequat mi dignissim sed. Mauris
-              dignissim elit augue, id pharetra odio malesuada eu. Sed vulputate
-              leo sed augue finibus, at tempor sapien rhoncus. Vestibulum at
-              viverra dui, nec facilisis felis. Donec molestie dictum lacus, sed
-              pharetra leo hendrerit eu
+              uStats es una herramienta web que te permitirá monitorear todo lo
+              que ocurre con tu transmisión en vivo de Youtube, desde algo tan
+              simple como estadística generales de la transmisión, hasta poder
+              conectar con tu comunidad conociendo los temas y preguntas
+              frecuentes que vayan surgiendo en el chat.
             </Typography>
           </Grid>
 
           <Grid item>
-            <Typography variant="h6">¿Como usar uStats?</Typography>
-            <Typography variant="body1" color="textPrimary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-              porttitor porttitor nibh, at consequat mi dignissim sed. Mauris
-              dignissim elit augue, id pharetra odio malesuada eu. Sed vulputate
-              leo sed augue finibus, at tempor sapien rhoncus. Vestibulum at
-              viverra dui, nec facilisis felis. Donec molestie dictum lacus, sed
-              pharetra leo hendrerit eu Curabitur velit neque, varius nec
-              sagittis id, vulputate id lectus. Curabitur tempus sem ut est
-              malesuada placerat. Aliquam luctus, massa a lobortis gravida, elit
-              leo lacinia massa, eget cursus orci eros aliquam massa. Quisque
-              interdum erat quis vehicula elementum. Morbi a pellentesque odio.
-              In laoreet, velit ac faucibus consectetur, urna risus accumsan
-              dui, et elementum dui felis vel dolor. Donec nisi orci, faucibus
-              quis eros et, aliquam rhoncus purus.
+            <Typography gutterBottom variant="h6">
+              ¿Cómo usar uStats?
+            </Typography>
+            <Typography gutterBottom variant="body1" color="textPrimary">
+              Para usar el servicio da clic en el botón <b>EMPEZAR</b>, inicia
+              sensión con la cuenta de Youtube de tu Streaming ¡Y listo! Se te
+              redigirirá a la siguiente página con información sobre tu
+              Streaming.
+            </Typography>
+
+            <Typography gutterBottom variant="body1" color="textPrimary">
+              En el dashboard podrás visualizar tu Streaming en la parte
+              superior izquierda, en la parte superior derecha la cantidad de
+              likes, dislikes en tiempo real, los temas y palabras más
+              frecuentes en la parte inferior izquierda y por último, en la
+              parte inferior izquierda los comentarios de tus espectadores
+              agrupados en burbujas.
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography gutterBottom variant="h6">
+              ¿Qué información me permite conocer uSats?
+            </Typography>
+            <Typography gutterBottom variant="body1" color="textPrimary">
+              En el dashboard podrás visualizar tu Streaming , la cantidad de
+              likes, dislikes en tiempo real, los temas y palabras más
+              frecuentes y por último, los comentarios de tus espectadores
+              agrupados en burbujas.
             </Typography>
           </Grid>
         </Grid>

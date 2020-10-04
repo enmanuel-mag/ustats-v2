@@ -5,6 +5,8 @@ import { Skeleton } from '@material-ui/lab';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from 'highcharts/modules/exporting';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import CommentIcon from '@material-ui/icons/Comment';
 import React from 'react';
 import {
   AreaChart,
@@ -37,7 +39,9 @@ const InfoStream = ({ infoStream, spects }) => {
   const classes = useStyles();
 
 
+  console.log(infoStream)
 
+  console.log(spects)
 
 
 
@@ -68,13 +72,18 @@ const InfoStream = ({ infoStream, spects }) => {
                 container
                 direction="row"
                 justify="center"
-                alignItems="flex-start"
+                alignItems="center"
                 spacing={6}
               >
                 <Statistics statistics={infoStream.statistics} classes={classes} />
               </Grid>
               <Grid item xs={12}>
-                <SpectRealTime spects={spects} classes={classes} />
+                {spects.length > 1 ? (<SpectRealTime spects={spects} classes={classes} />) : (
+                  <Skeleton variant="rect" width="95%" height="100%">
+                    <div style={{ paddingTop: '30%' }} />
+                  </Skeleton>
+
+                )}
               </Grid>
             </Grid>
 
@@ -106,27 +115,9 @@ function Statistics({ statistics, classes }) {
         item
         container
         direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        xs={3}
-      >
-        <Grid item xs={2}>
-          <Visibility color="primary" />
-        </Grid>
-        <Grid item xs={4}>
-          <Typography display="inline" variant="h6">
-            {' '}
-            <b>{viewCount}</b>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid
-        item
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        xs={3}
+        justify="center"
+        alignItems="center"
+        xs={6}
       >
         <Grid item xs={2}>
           <ThumbUpAlt color="primary" />
@@ -134,7 +125,7 @@ function Statistics({ statistics, classes }) {
         <Grid item xs={4}>
           <Typography display="inline" variant="h6">
             {' '}
-            {likeCount}
+            <b>{likeCount}</b>
           </Typography>
         </Grid>
       </Grid>
@@ -144,67 +135,31 @@ function Statistics({ statistics, classes }) {
         direction="row"
         justify="flex-start"
         alignItems="flex-start"
-        xs={3}
+        xs={6}
       >
         <Grid item xs={2}>
-          <QueryBuilder color="primary" />
+          <ThumbDownAltIcon color="primary" />
         </Grid>
         <Grid item xs={4}>
           <Typography display="inline" variant="h6">
             {' '}
-            {commentCount}
+            {dislikeCount}
           </Typography>
         </Grid>
       </Grid>
+
     </>
   );
 }
 
 function SpectRealTime({ spects, classes }) {
-  const data = [
-    {
-      time: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      time: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      time: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      time: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      time: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      time: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      time: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+
+
+
+  if (spects.length < 1) {
+    spects.push(1)
+    spects.push(1)
+  }
 
   const xLabel = spects.map((e) => ('Texto'))
 
@@ -218,7 +173,7 @@ function SpectRealTime({ spects, classes }) {
     },
     colors: ['#f44336'],
     title: {
-      text: 'Espectadores en tiempo real'
+      text: 'Me gustas en tiempo real'
     },
     legend: {
       layout: 'vertical',
@@ -238,7 +193,7 @@ function SpectRealTime({ spects, classes }) {
     },
     yAxis: {
       title: {
-        text: 'Espectadores'
+        text: 'Cantidad de me gustas'
       }
     },
     tooltip: {
@@ -254,7 +209,7 @@ function SpectRealTime({ spects, classes }) {
       }
     },
     series: [{
-      name: 'Espectadores',
+      name: 'Me gustas',
       data: spects
     }]
   }

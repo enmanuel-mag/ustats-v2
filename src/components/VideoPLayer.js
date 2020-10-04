@@ -14,14 +14,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const VideoPLayer = (props) => {
-  const { urlVideo } = props;
+  const { videoId } = props;
   const classes = useStyles();
 
   return (
     <Grow in direction="up" timeout={750}>
       <ReactPlayer
         className={classes.container}
-        url={urlVideo}
+        url={`https://www.youtube.com/watch?v=${videoId}`}
         height="100%"
         width="auto"
       />
