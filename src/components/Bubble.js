@@ -67,7 +67,8 @@ const Bubble = ({ data }) => {
         },
       },
     },
-    series: data
+    series: data,
+    enableSimulation: false,
   };
 
   if (typeof Highcharts === 'object') {
@@ -84,27 +85,27 @@ const Bubble = ({ data }) => {
               </figure>
             </Container>
           ) : (
-              <Box
-                width="100%"
-                alignContent="center"
-                style={{ paddingBottom: '1.5rem' }}
+            <Box
+              width="100%"
+              alignContent="center"
+              style={{ paddingBottom: '1.5rem' }}
+            >
+              <Skeleton
+                width="50%"
+                style={{ display: 'block', margin: 'auto' }}
               >
-                <Skeleton
-                  width="50%"
-                  style={{ display: 'block', margin: 'auto' }}
-                >
-                  <Typography variant="h3">.</Typography>
-                </Skeleton>
-                <Skeleton
-                  variant="rect"
-                  width="95%"
-                  height="100%"
-                  style={{ display: 'block', margin: 'auto' }}
-                >
-                  <div style={{ paddingTop: '95%' }} />
-                </Skeleton>
-              </Box>
-            )}
+                <Typography variant="h3">.</Typography>
+              </Skeleton>
+              <Skeleton
+                variant="rect"
+                width="95%"
+                height="100%"
+                style={{ display: 'block', margin: 'auto' }}
+              >
+                <div style={{ paddingTop: '95%' }} />
+              </Skeleton>
+            </Box>
+          )}
         </Paper>
       </Grow>
     );

@@ -51,14 +51,12 @@ const InputLink = () => {
   const [stats, setStats] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    window.gapi.load('client:auth2', function () {
-      window.gapi.auth2.init({
-        client_id:
-          '562079300844-3j1crd3j2nr6gt47fp1ld5i50jr73ine.apps.googleusercontent.com',
-      });
+  window.gapi.load('client:auth2', function () {
+    window.gapi.auth2.init({
+      client_id:
+        '1096884508122-bmg6p19vqvsindhs7i8t0eu4ulna70pa.apps.googleusercontent.com',
     });
-  }, [liveChatIdState, channelIdState]);
+  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -83,7 +81,7 @@ const InputLink = () => {
   const loadClient = async () => {
     try {
       await window.gapi.client.setApiKey(
-        'AIzaSyChscvtJ-RlEJYuf9kt8Fn5iiRi6wjOxIc'
+        'AIzaSyDmJ1bgVuGjNtpnljeceuTjIwI20gnT32Y'
       );
       const lc = await window.gapi.client.load(
         'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'

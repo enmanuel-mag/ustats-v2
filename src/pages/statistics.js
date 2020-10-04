@@ -44,47 +44,46 @@ const Statistics = () => {
   const [wcSt, setWcSt] = useState(null);
 
   useEffect(() => {
-    setInterval(() => {
-      (async () => {
-        try {
+    if (spects < 1) {
+      setInterval(() => {
+        (() => {
           console.log(videoId);
-          const st = await window.gapi.client.youtube.videos.list({
-            part: ['snippet,contentDetails,statistics'],
-            id: [videoId],
-          });
-          setInfoStream(st.result.items[0]);
-          setSpects((p) => [
-            ...p,
-            parseInt(st.result.items[0].statistics.likeCount),
-          ]);
-          return st.result.items[0];
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }, 15000);
+          const st = window.gapi.client.youtube.videos
+            .list({
+              part: ['snippet,contentDetails,statistics'],
+              id: [videoId],
+            })
+            .then((st) => {
+              setInfoStream(st.result.items[0]);
+              setSpects((p) => [
+                ...p,
+                parseInt(st.result.items[0].statistics.likeCount),
+              ]);
+              return st.result.items[0];
+            });
+        })();
+      }, 6500);
+    }
     console.log('Desde API DETAILS');
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      (async () => {
-        const response = await fetch('/consultas/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ liveChatId: snippet.liveChatId }),
-        });
-        console.log(response);
-        const data = await response.json();
-        console.log(data);
-        const { bubble, wc } = data;
+    (async () => {
+      const response = await fetch('/consultas/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ liveChatId: snippet.liveChatId }),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      const { bubble, wc } = data;
 
-        setBubbleSt(bubble);
-        setWcSt(wc);
-      })();
-    }, 20000);
+      setBubbleSt(bubble);
+      setWcSt(wc);
+    })();
 
     console.log(snippet);
   }, []);
