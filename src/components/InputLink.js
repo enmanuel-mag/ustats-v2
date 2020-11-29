@@ -54,7 +54,7 @@ const InputLink = () => {
   window.gapi.load('client:auth2', function () {
     window.gapi.auth2.init({
       client_id:
-        '1096884508122-bmg6p19vqvsindhs7i8t0eu4ulna70pa.apps.googleusercontent.com',
+        '261201051293-7ilirbpr6395nm3puctfth621vljfb0i.apps.googleusercontent.com',
     });
   });
 
@@ -81,7 +81,7 @@ const InputLink = () => {
   const loadClient = async () => {
     try {
       await window.gapi.client.setApiKey(
-        'AIzaSyDmJ1bgVuGjNtpnljeceuTjIwI20gnT32Y'
+        'AIzaSyA1favG20KM792tf81CMEpNJ18RghoOpO8'
       );
       const lc = await window.gapi.client.load(
         'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
