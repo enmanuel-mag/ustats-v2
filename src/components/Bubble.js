@@ -67,9 +67,11 @@ const Bubble = ({ data }) => {
         },
       },
     },
-    series: data,
+    series: DATA,
     enableSimulation: false,
   };
+
+  console.log('HOLII')
 
   if (typeof Highcharts === 'object') {
     HighchartsExporting(Highcharts);
@@ -114,4 +116,76 @@ const Bubble = ({ data }) => {
   }
 };
 
-export default Bubble;
+const DATA = [{
+  name: 'Son buenas las tarjetas RTX?',
+  data: [
+  {
+      name: "Mejor una RTX 2060 o una 3050?",
+      value: 204.7
+  },
+  {
+      name: "Que tarjeta puedo comprar para jugar en 4K?",
+      value: 240.6
+  },
+  {
+      name: "Las nuebo RX de AMD son mejores que la RTX de NVIDA",
+      value: 200.7
+  },
+  {
+      name: "Que generacion de tajretas pueod comprar?",
+      value: 240.4
+  },
+  {
+      name: "ALguna tarjeta grafica para jugar Cyberpunk?",
+      value: 240.7
+  }
+  ]
+}, {
+  name: 'Que buen juego hay actualmente?',
+  data: [
+  {
+      name: "Juegos gratis?",
+      value: 25
+  },
+  {
+      name: "DOnde compras tus juegos?",
+      value: 50.6
+  },
+  {
+      name: "Mejor es comprar en Steam o en Origin?",
+      value: 7.3
+  },
+  {
+      name: "Algun lugar para ofertas en juegos?",
+      value: 60.7
+  }
+  ]
+}, {
+  name: 'Que audífonos recominedas? Razer o Logtech?',
+  data: [{
+      name: "Donde puedo comprar auriculareS?",
+      value: 7.6
+  },
+  {
+      name: "De que marca son tus auriculares?",
+      value: 8.4
+  },
+  {
+      name: "Mejor comprar auriculares bluetooh o alámbricos?",
+      value: 8.3
+  },
+  {
+      name: "SOn buenos los audifonos bluetooh?",
+      value: 10.2
+  },
+  ]
+
+}]
+
+function moviePropsAreEqual(prev, next) {
+  console.log(prev.id === next.id)
+  return prev.id === next.id;
+}
+
+
+export default React.memo(Bubble, moviePropsAreEqual);

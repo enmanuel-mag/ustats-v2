@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   AppBar,
@@ -9,10 +9,12 @@ import {
   Toolbar,
   Typography,
   useScrollTrigger,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
+const w = window;
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -33,18 +35,26 @@ function ElevationScroll(props) {
 const useStyles = makeStyles((theme) => ({
   bgColor: {
     backgroundImage:
-      'linear-gradient(-225deg, #ab1e1e 0%, #ff4242 40%, #ff4242 60%, #ab1e1e 100%)',
-    width: '100%',
-    height: '24rem',
+      "linear-gradient(-225deg, #ab1e1e 0%, #ff4242 40%, #ff4242 60%, #ab1e1e 100%)",
+    width: "100%",
+    height: "24rem",
+  },
+  bgColor2: {
+    backgroundImage: "#00000000",
+    width: "100%",
+    height: "24rem",
   },
 
   link: {
-    color: 'hsla(0,0%,100%,.8)',
-    textDecoration: 'none !important',
+    color: "hsla(0,0%,100%,1)",
+    textDecoration: "none !important",
   },
   navBar: {
-    backgroundImage:
-      'linear-gradient(-225deg, #ad1f1f 0%, #fe4242 40%, #fd4242 60%, #ce2d2d 100%)',
+    backgroundColor:
+      "linear-gradient(-225deg, #ab1e1e 0%, #ff4242 40%, #ff4242 60%, #ab1e1e 100%)",
+  },
+  navBar2: {
+    backgroundColor: "#00000000",
   },
 }));
 
@@ -55,9 +65,23 @@ const Layout = (props) => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <div id="section-bg" className={classes.bgColor}>
+      <div
+        id="section-bg"
+        className={
+          w.location.href.includes("statistics")
+            ? classes.bgColor2
+            : classes.bgColor
+        }
+      >
         <ElevationScroll {...props}>
-          <AppBar className={classes.navBar} elevation={0}>
+          <AppBar
+            className={
+              w.location.href.includes("statistics")
+                ? classes.navBar
+                : classes.navBar2
+            }
+            elevation={0}
+          >
             <Toolbar>
               <Container>
                 <Grid
@@ -106,7 +130,7 @@ const Layout = (props) => {
                     <Grid item>
                       <Typography variant="h6" color="secondary">
                         <Link to="/" className={classes.link}>
-                          {' '}
+                          {" "}
                           Acerca de
                         </Link>
                       </Typography>

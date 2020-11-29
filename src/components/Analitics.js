@@ -93,17 +93,15 @@ const useStyleList = makeStyles((theme) => ({
 
 const Analitics = (props) => {
   const { topics } = props;
-  const [info, setInfo] = useState([])
+  /* const [info, setInfo] = useState([])
 
   useEffect(() => {
-
     topics.map((e, i) => {
       setInfo(p => {
         return [...p, e.data[0].name]
       })
     })
-
-  }, [topics])
+  }, [topics]) */
 
 
 
@@ -113,7 +111,7 @@ const Analitics = (props) => {
   return (
     <Grow in direction="up" timeout={750}>
       <Paper className={classes.paper}>
-        {topics ? (
+        {DATA ? (
           <Container className={classes.container}>
             <Grid
               container
@@ -140,9 +138,9 @@ const Analitics = (props) => {
                   <Typography variant="h6">Temas frecuentes:</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  {info.map((text, index) => (
+                  {DATA.map((text, index) => (
                     <ListItem key={index} classes={classesList}>
-                      {index + 1}- {text}
+                      {index + 1}- {text.name}
                     </ListItem>
                   ))}
                 </Grid>
@@ -176,5 +174,71 @@ const Analitics = (props) => {
     </Grow>
   );
 };
+
+const DATA = [{
+  name: 'Son buenas las tarjetas RTX?',
+  data: [
+  {
+      name: "Mejor una RTX 2060 o una 3050?",
+      value: 204.7
+  },
+  {
+      name: "Que tarjeta puedo comprar para jugar en 4K?",
+      value: 240.6
+  },
+  {
+      name: "Las nuebo RX de AMD son mejores que la RTX de NVIDA",
+      value: 200.7
+  },
+  {
+      name: "Que generacion de tajretas pueod comprar?",
+      value: 240.4
+  },
+  {
+      name: "ALguna tarjeta grafica para jugar Cyberpunk?",
+      value: 240.7
+  }
+  ]
+}, {
+  name: 'Que buen juego hay actualmente?',
+  data: [
+  {
+      name: "Juegos gratis?",
+      value: 25
+  },
+  {
+      name: "DOnde compras tus juegos?",
+      value: 50.6
+  },
+  {
+      name: "Mejor es comprar en Steam o en Origin?",
+      value: 7.3
+  },
+  {
+      name: "Algun lugar para ofertas en juegos?",
+      value: 60.7
+  }
+  ]
+}, {
+  name: 'Que audífonos recominedas? Razer o Logtech?',
+  data: [{
+      name: "Donde puedo comprar auriculareS?",
+      value: 7.6
+  },
+  {
+      name: "De que marca son tus auriculares?",
+      value: 8.4
+  },
+  {
+      name: "Mejor comprar auriculares bluetooh o alámbricos?",
+      value: 8.3
+  },
+  {
+      name: "SOn buenos los audifonos bluetooh?",
+      value: 10.2
+  },
+  ]
+
+}]
 
 export default Analitics;
