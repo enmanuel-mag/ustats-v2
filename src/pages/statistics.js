@@ -34,7 +34,7 @@ const Statistics = () => {
   const classes = useStyles();
   const urlVideo = "https://www.youtube.com/watch?v=C-o8pTi6vd8";
   const location = useLocation();
-  const { snippet } = location.state;
+  //const { snippet } = location.state;
 
   const [infoStream, setInfoStream] = useState({
     type: true,
@@ -49,8 +49,8 @@ const Statistics = () => {
     },
   });
   const [spects, setSpects] = useState([]);
-  const listUrl = snippet.thumbnails.default.url.split("/");
-  const videoId = listUrl[listUrl.length - 2];
+  //const listUrl = snippet.thumbnails.default.url.split("/");
+  //const videoId = listUrl[listUrl.length - 2];
   const [bubbleSt, setBubbleSt] = useState(null);
   const [wcSt, setWcSt] = useState(null);
 
