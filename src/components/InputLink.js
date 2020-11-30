@@ -113,9 +113,9 @@ const InputLink = () => {
     await authenticate();
     handleOpen();
     await loadClient();
-    const { snippet } = await getLiveChatAndChannelId();
+    //const { snippet } = await getLiveChatAndChannelId();
     handleClose();
-    history.push('/statistics', { snippet });
+    history.push('/statistics', { snippet: null });
   };
 
   const Transition = React.forwardRef(function Transition(props, ref) {
