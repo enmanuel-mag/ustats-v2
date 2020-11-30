@@ -104,7 +104,7 @@ const Statistics = () => {
     console.log("Desde API DETAILS");
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     (async () => {
       const response = await fetch("/consultas/", {
         method: "POST",
@@ -123,7 +123,7 @@ const Statistics = () => {
     })();
 
     console.log(snippet);
-  }, []);
+  }, []); */
 
   const words = [
     {
